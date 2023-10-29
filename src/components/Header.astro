@@ -1,0 +1,176 @@
+---
+import { Image } from "astro:assets";
+import headerLogoImage from "../assets/logo.svg";
+---
+
+<header class="header">
+  <div class="header__inner">
+    <a class="header__logo" href="/">
+      <Image src={ headerLogoImage } alt="Header logo" />
+    </a>
+    <nav class="header__navi">
+      <a href="/404">Home</a>
+      <a href="/">Posts</a>
+      <a href="/">Authors</a>
+    </nav>
+    <button class="hamburger" type="button" aria-label="Hamburger menu toggle">
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+      <span class="hamburger__bar"></span>
+    </button>
+    <div class="drawer-menu">
+      <nav class="drawer-menu__inner">
+        <a href="/">Home</a>
+        <a href="/">Posts</a>
+        <a href="/">Authors</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style lang="scss">
+  @use "../styles/colors" as *;
+
+  // ***** ***** header
+  .header {
+    border-bottom: 1px solid $color-text;
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 100%;
+      border-bottom: 1px solid $color-text;;
+      position: absolute;
+      top: calc(100% - 3px);
+      left: 0;
+    }
+
+    &__inner {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+
+      @media screen and (max-width: 768px) {
+        height: 60px;
+        gap: 0 2rem;
+      }
+    }
+  }
+
+  // ***** ***** header__logo
+  .header__logo {
+    width: clamp(13.75rem, 9.286rem + 22.32vw, 20rem);
+    flex: 1;
+  }
+
+  // ***** ***** header__navi
+  .header__navi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 1.5em;
+
+    a {
+      font-size: 1.125rem;
+
+      @media (hover: hover) {
+        &:hover {
+          color: $color-accent;
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  // ***** ***** hamburger
+  .hamburger {
+    width: 32px;
+    padding: .5rem 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 0;
+    
+    &__bar {
+      display: block;
+      width: 100%;
+      border-bottom: 2px solid $color-text;
+      transition-property: transform, opacity;
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in-out;
+    }
+
+    &.js-active {
+      .hamburger__bar:nth-of-type(1) {
+        transform: rotate(45deg) translate(4px, 5px);
+      }
+      
+      .hamburger__bar:nth-of-type(2) {
+        transform: translateX(-25%);
+        opacity: 0;
+      }
+
+      .hamburger__bar:nth-of-type(3) {
+        transform: rotate(-45deg) translate(4px, -5px);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  // ***** ***** drawer-menu
+  .drawer-menu {
+    width: 100%;
+    height: 0px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: $color-text;
+    visibility: hidden;
+    opacity: 0;
+    transition-property: visibility, height, opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+
+    &__inner {
+      padding: 1.5rem 1.5rem 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      overflow: hidden;
+
+      a + a {
+        margin-top: 1.5rem;
+      }
+
+      a {
+        color: $color-bg;
+        font-size: 1.5rem;
+        transition: opacity 0.1s ease-in-out;
+        opacity: 0;
+      }
+    }
+
+    &.js-active {
+      visibility: visible;
+      height: var(--drawerMenu-height);
+      opacity: 1;
+
+      .drawer-menu__inner {
+        a {
+          transition-delay: 0.2s;
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+</style>

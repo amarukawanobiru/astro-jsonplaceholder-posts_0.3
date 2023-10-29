@@ -1,0 +1,37 @@
+---
+---
+
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__copy">&copy; 2023 Nobiru Amarukawa</p>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use "../styles/colors" as *;
+
+  .footer {
+    border-top: 1px solid $color-text;
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 100%;
+      border-bottom: 1px solid $color-text;;
+      position: absolute;
+      top: 2px;
+      left: 0;
+    }
+
+    &__inner {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    &__copy {
+      font-size: 0.75rem;
+      letter-spacing: .05em;
+      text-align: center;
+    }
+  }
+</style>

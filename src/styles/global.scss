@@ -1,0 +1,29 @@
+@use "colors" as *;
+@use "reset" as *;
+
+body {
+  background-color: $color-bg;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  color: $color-text;
+}
+
+.pt8rem {
+  padding-top: 8rem;
+}
+
+.container {
+  width: 1024px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.main-content {
+  min-height: calc((var(--view-height, 1vh) * 100) - 81px - 48px);
+
+  @media screen and (max-width: 768px) {
+    min-height: calc((var(--view-height, 1vh) * 100) - 61px - 48px);
+  }
+}
