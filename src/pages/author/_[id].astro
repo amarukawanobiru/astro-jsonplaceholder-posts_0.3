@@ -1,4 +1,4 @@
----
+<!-- ---
 import PageLayout from "../../layouts/PageLayout.astro";
 import PostList from "../../components/PostList.astro";
 import { Image } from "astro:assets";
@@ -16,21 +16,21 @@ import { fetchApi } from "../../scripts/api";
 import { endpoint } from "../../lib/config";
 import type { Author, Post, PageStatus } from "../../lib/config";
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = (async () => {
   const authorsData = await fetchApi(endpoint.authors);
+  const allPosts = await fetchApi(endpoint.posts);
 
-  return authorsData.map((author: Author) => ({
-    params: { id: String(author.id) },
-  }));
-};
+  return authorsData.map((author: Author) => {
+    const authorsPosts = allPosts.filter((post: Post) => post.userId === author.id)
 
-const { id } = Astro.params;
+    return {
+      params: { id: author.id },
+      props: { author, posts: authorsPosts },
+    }
+  })
+})
 
-const authorsData = await fetchApi(endpoint.authors);
-const author: Author = authorsData.find((author: Author) => String(author.id) === id);
-
-const allPosts = await fetchApi(endpoint.posts);
-const posts = allPosts.filter((post: Post) => String(post.userId) === id);
+const { author, posts } = Astro.props;
 
 const authorIcons = [
   authorIcon_01,
@@ -163,4 +163,4 @@ const pageStatus: PageStatus = {
       display: block;
     }
   }
-</style>
+</style> -->
