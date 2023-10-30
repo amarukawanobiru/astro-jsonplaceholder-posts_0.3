@@ -5,6 +5,12 @@ const setFillHeight = () => {
     "--view-height",
     `${viewHeight}px`
   );
+
+  const drawerMenuHeiht = $drawerMenu.scrollHeight;
+  document.documentElement.style.setProperty(
+    "--drawerMenu-height",
+    `${drawerMenuHeiht}px`
+  );
 };
 
 window.addEventListener("load", () => {
@@ -18,12 +24,6 @@ window.addEventListener("resize", () => {
 // ***** ***** ***** Hamburger menu
 const $hamburger = document.querySelector(".hamburger");
 const $drawerMenu = document.querySelector(".drawer-menu");
-const drawerMenuHeiht = $drawerMenu.scrollHeight;
-
-document.documentElement.style.setProperty(
-  "--drawerMenu-height",
-  `${drawerMenuHeiht}px`
-);
 
 $hamburger.addEventListener("click", () => {
   $hamburger.classList.toggle("js-active");
