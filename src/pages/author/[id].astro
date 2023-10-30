@@ -21,7 +21,7 @@ export const getStaticPaths = async () => {
   const allPosts = await fetchApi(endpoint.posts);
 
   return authorsData.map((author: Author) => {
-    const authorsPosts = allPosts.filter((post: Post) => post.userId === String(author.id))
+    const authorsPosts = allPosts.filter((post: Post) => post.userId === author.id)
 
     return {
       params: { id: author.id },
@@ -31,7 +31,6 @@ export const getStaticPaths = async () => {
 }
 
 const { author, posts } = Astro.props;
-console.log(author)
 
 const authorIcons = [
   authorIcon_01,

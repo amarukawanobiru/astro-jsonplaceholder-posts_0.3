@@ -20,7 +20,7 @@ export const getStaticPaths = async () => {
   const authorsData = await fetchApi(endpoint.authors);
 
   return allPosts.map((post: Post) => {
-    const postAuthor = authorsData.find((author: Author) => String(author.id) === post.userId);
+    const postAuthor = authorsData.find((author: Author) => author.id === post.userId);
 
     return {
       params: { id: post.id },
