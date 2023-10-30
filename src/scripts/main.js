@@ -11,19 +11,23 @@ const setFillHeight = () => {
 const $hamburger = document.querySelector(".hamburger");
 const $drawerMenu = document.querySelector(".drawer-menu");
 
-$hamburger.addEventListener("click", () => {
-  $hamburger.classList.toggle("js-active");
-  $drawerMenu.classList.toggle("js-active");
-});
-
-window.addEventListener("load", () => {
-  setFillHeight();
-
+const setDrawerMenuHeight = () => {
   const drawerMenuHeiht = $drawerMenu.scrollHeight;
   document.documentElement.style.setProperty(
     "--drawerMenu-height",
     `${drawerMenuHeiht}px`
   );
+};
+
+$hamburger.addEventListener("click", () => {
+  $hamburger.classList.toggle("js-active");
+  $drawerMenu.classList.toggle("js-active");
+});
+
+// ***** ***** ***** window.addEventListener()
+window.addEventListener("load", () => {
+  setFillHeight();
+  setDrawerMenuHeight();
 });
 
 window.addEventListener("resize", () => {
