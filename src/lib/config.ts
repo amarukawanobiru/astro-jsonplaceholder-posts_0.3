@@ -4,8 +4,8 @@ export interface PageStatus {
 }
 
 export interface Post {
-  userId: string;
-  id: string;
+  userId: number;
+  id: number;
   title: string;
   body: string;
 }
