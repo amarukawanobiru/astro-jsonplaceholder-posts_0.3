@@ -1,0 +1,63 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import PostList from "../../components/PostList.astro";
+import { fetchApi } from "../../scripts/api";
+import { endpoint } from "../../lib/config";
+import type { GetStaticPathsOptions } from "astro";
+
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
+  const allPosts = await fetchApi(endpoint.posts);
+
+  return paginate(allPosts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+
+const paginationNumbers = Array.from({ length: page.lastPage }, (_, i) => String(i + 1));
+
+const pageStatus = {
+  title: `Posts | page: ${ page.currentPage }`,
+  description: "I am not good at English, but I tried my best to make it.",
+}
+---
+
+<PageLayout title={ pageStatus.title } description={ pageStatus.description }>
+  <section class="posts section ptAnyRem mbAnyRem">
+    <h1 class="section-heading"><span class="section-heading__inner-text">Posts</span></h2>
+    <div class="posts__inner inner">
+      <PostList posts={ page.data } />
+      <ul class="pagination">
+        {
+          paginationNumbers.map((pageNumber) => {
+            return (
+              pageNumber === `${ page.currentPage }` ?
+              <li><span class="current-page">{ pageNumber }</span></li> :
+              <li><a class="paginate-link" href={ `/posts/${ pageNumber }` }>{ pageNumber }</a></li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</PageLayout>
+
+<style lang="scss">
+  @use "../../styles/colors" as *;
+
+  .pagination {
+    margin-top: 4rem;
+    display: flex;
+    gap: 0 clamp(0.75rem, 0.571rem + 0.89vw, 1rem);
+  }
+
+  .current-page {
+    opacity: 0.5;
+    text-decoration: underline;
+  }
+
+  @media (hover: hover) {
+    .paginate-link:hover {
+      color: $color-accent;
+    }
+  }
+</style>

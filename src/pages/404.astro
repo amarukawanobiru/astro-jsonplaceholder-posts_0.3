@@ -1,14 +1,15 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import type { PageStatus } from "../lib/config";
 
-const pageStatus = {
+const pageStatus: PageStatus = {
   title: "404 Error | Page Not Found",
-  description: "I am not good at English, but I tried my best to make it."
+  description: "I am not good at English, but I tried my best to make it.",
 };
 ---
 
 <PageLayout title={ pageStatus.title } description={ pageStatus.description }>
-  <section class="page-404 pt8rem">
+  <section class="page-404 ptAnyRem">
     <div class="page-404__inner">
       <h1 class="page-404__heading">Oops!<br />The page you're looking<br />for couldn't be found.</h1>
       <div class="page-404__body">

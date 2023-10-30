@@ -1,0 +1,163 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import { Image } from "astro:assets";
+import authorIcon_01 from "../../assets/author-icon_01.png";
+import authorIcon_02 from "../../assets/author-icon_02.png";
+import authorIcon_03 from "../../assets/author-icon_03.png";
+import authorIcon_04 from "../../assets/author-icon_04.png";
+import authorIcon_05 from "../../assets/author-icon_05.png";
+import authorIcon_06 from "../../assets/author-icon_06.png";
+import authorIcon_07 from "../../assets/author-icon_07.png";
+import authorIcon_08 from "../../assets/author-icon_08.png";
+import authorIcon_09 from "../../assets/author-icon_09.png";
+import authorIcon_10 from "../../assets/author-icon_10.png";
+import { endpoint } from "../../lib/config";
+import { fetchApi } from "../../scripts/api";
+import type { Post, Author, PageStatus } from "../../lib/config";
+
+export const getStaticPaths = async () => {
+  const allPosts = await fetchApi(endpoint.posts);
+  const authorsData = await fetchApi(endpoint.authors);
+
+  return allPosts.map((post: Post) => {
+    const postAuthor = authorsData.find((author: Author) => String(author.id) === post.userId);
+
+    return {
+      params: { id: post.id },
+      props: { post, totalPages: allPosts.length, author: postAuthor },
+    };
+  });
+}
+
+const { id } = Astro.params;
+const { post, totalPages, author } = Astro.props;
+
+const authorIcons = [
+  authorIcon_01,
+  authorIcon_02,
+  authorIcon_03,
+  authorIcon_04,
+  authorIcon_05,
+  authorIcon_06,
+  authorIcon_07,
+  authorIcon_08,
+  authorIcon_09,
+  authorIcon_10,
+];
+
+const pageStatus: PageStatus = {
+  title: post.title,
+  description: "I am not good at English, but I tried my best to make it.",
+};
+---
+
+<PageLayout title={ pageStatus.title } description={ pageStatus.description }>
+  <section class="post section ptAnyRem">
+    <div class="inner">
+      <h1 class="post__title">{ post.title }</h1>
+      <div class="post__body">
+        <p>{ post.body }</p>
+      </div>
+      <div class="author-meta">
+        <a class="author-meta__link" href={ `/author/${ author.id }` }>
+          <Image class="author-meta__image" src={ authorIcons[author.id - 1] } alt="Author icon" />
+          <div class="author-meta__body">
+            <h2 class="author-meta__username">{ author.username.replace(/[_\.]/g, " ") }</h2>
+            <p class="author-meta__name">by: { author.name }</p>
+          </div>
+        </a>
+      </div>
+      <div class="page-links">
+        {
+          Number(id) - 1 > 0 ?
+          <a href={ `/post/${ Number(id) - 1 }` }>{ `<<` } prev post</a> :
+          <span>{ `<<` } prev post</span>
+        }
+        {
+          Number(id) < Number(totalPages) ?
+          <a href={ `/post/${ Number(id) + 1 }` }>next post { `>>` }</a> :
+          <span>next post { `>>` }</span>
+        }
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style lang="scss">
+  @use "../../styles/colors" as *;
+
+  .post__title {
+    font-size: clamp(2rem, 0.929rem + 5.36vw, 3.5rem);
+    font-family: "EB Garamond", serif;
+  }
+
+  .post__body {
+    margin-top: 4rem;
+    line-height: 1.7;
+  }
+
+  .author-meta {
+    width: fit-content;
+    margin-top: 4rem;
+
+    &__link {
+      display: flex;
+      align-items: center;
+      gap: 0 1.5rem;
+
+      @media (hover: hover) {
+        &:hover {
+          .author-meta__image {
+            opacity: 0.7;
+          }
+
+          .author-meta__username {
+            color: $color-accent;
+          }
+
+          .author-meta__name {
+            color: $color-accent;
+          }
+        }
+      }
+    }
+
+    &__image {
+      max-width: 128px;
+    }
+
+    &__username {
+      font-family: "EB Garamond", sans-serif;
+      font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
+      font-weight: 700;
+    }
+
+    &__name {
+      margin-top: 0.25rem;
+      font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
+      font-style: italic;
+    }
+  }
+
+  .page-links {
+    font-size: 1rem;
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+
+    a {
+      border-bottom: 1px solid $color-text;
+
+      @media (hover: hover) {
+        &:hover {
+          border-color: $color-accent;
+          color: $color-accent;
+        }
+      }
+    }
+
+    span {
+      opacity: .3;
+    }
+  }
+</style>

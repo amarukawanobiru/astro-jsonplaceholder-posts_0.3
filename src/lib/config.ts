@@ -1,3 +1,8 @@
+export interface PageStatus {
+  title: string;
+  description: string;
+}
+
 export interface Post {
   userId: string;
   id: string;
@@ -25,7 +30,7 @@ interface Company {
 }
 
 export interface Author {
-  id: string;
+  id: number;
   name: string;
   username: string;
   email: string;

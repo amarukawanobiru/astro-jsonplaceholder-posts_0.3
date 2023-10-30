@@ -1,6 +1,19 @@
 ---
 import { Image } from "astro:assets";
 import headerLogoImage from "../assets/logo.svg";
+
+const navLinks = [
+  {
+    name: "Home",
+    slug: "/",
+  }, {
+    name: "Posts",
+    slug: "/posts/1",
+  }, {
+    name: "Authors",
+    slug: "/authors",
+  }
+]
 ---
 
 <header class="header">
@@ -9,9 +22,11 @@ import headerLogoImage from "../assets/logo.svg";
       <Image src={ headerLogoImage } alt="Header logo" />
     </a>
     <nav class="header__navi">
-      <a href="/404">Home</a>
-      <a href="/">Posts</a>
-      <a href="/">Authors</a>
+      {
+        navLinks.map((navLink) => (
+          <a href={ navLink.slug }>{ navLink.name }</a>
+        ))
+      }
     </nav>
     <button class="hamburger" type="button" aria-label="Hamburger menu toggle">
       <span class="hamburger__bar"></span>
@@ -20,9 +35,11 @@ import headerLogoImage from "../assets/logo.svg";
     </button>
     <div class="drawer-menu">
       <nav class="drawer-menu__inner">
-        <a href="/">Home</a>
-        <a href="/">Posts</a>
-        <a href="/">Authors</a>
+        {
+          navLinks.map((navLink) => (
+            <a href={ navLink.slug }>{ navLink.name }</a>
+          ))
+        }
       </nav>
     </div>
   </div>
@@ -61,7 +78,7 @@ import headerLogoImage from "../assets/logo.svg";
 
   // ***** ***** header__logo
   .header__logo {
-    width: clamp(13.75rem, 9.286rem + 22.32vw, 20rem);
+    width: 320px;
     flex: 1;
   }
 

@@ -1,0 +1,38 @@
+---
+import type { Post } from "../lib/config";
+
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+  {
+    posts.map((post: Post) => (
+      <li class="post-item"><a class="post-item__link" href={ `/post/${ post.id }` }>{ post.title }</a></li>
+    ))
+  }
+</ul>
+
+<style lang="scss">
+  @use "../styles/colors" as *;
+
+  .post-item + .post-item {
+    margin-top: 1rem;
+  }
+
+  .post-item__link {
+    width: fit-content;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid $color-text;
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $color-accent;
+        color: $color-accent;
+      }
+    }
+  }
+</style>

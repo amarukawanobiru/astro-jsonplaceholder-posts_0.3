@@ -1,11 +1,34 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import type { PageStatus, Post } from "../lib/config";
+import MainVisual from "../components/MainVisual.astro";
+import PostList from "../components/PostList.astro";
+import AuthorList from "../components/AuthorList.astro";
+import { fetchApi } from "../scripts/api";
+import { endpoint } from "../lib/config";
 
-const pageStatus = {
+const allPosts = await fetchApi(endpoint.posts);
+const filteredPosts = allPosts.filter((post: Post) => Number(post.id) % 10 === 1);
+
+const pageStatus: PageStatus = {
   title: "JSONPlaceholder Posts | Home",
   description: "I am not good at English, but I tried my best to make it.",
 };
 ---
 
 <PageLayout title={ pageStatus.title } description={ pageStatus.description }>
+  <MainVisual />
+  <section class="posts section">
+    <h2 class="section-heading"><span class="section-heading__inner-text">Posts</span></h2>
+    <div class="posts__inner inner">
+      <PostList posts={ filteredPosts } />
+      <a class="view-more" href="/posts/1">view more { `>>` }</a>
+    </div>
+  </section>
+  <section class="authors section mbAnyRem">
+    <h2 class="section-heading"><span class="section-heading__inner-text">Authors</span></h2>
+    <div class="authors__inner inner">
+      <AuthorList />
+    </div>
+  </section>
 </PageLayout>

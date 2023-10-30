@@ -5,10 +5,23 @@ body {
   background-color: $color-bg;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   color: $color-text;
+  font-size: clamp(1rem, 0.821rem + 0.89vw, 1.25rem);
 }
 
-.pt8rem {
+.ptAnyRem {
   padding-top: 8rem;
+
+  @media screen and (max-width: 428px) {
+    padding-top: 4rem;
+  }
+}
+
+.mbAnyRem {
+  margin-bottom: 12rem;
+
+  @media screen and (max-width: 428px) {
+    padding-top: 6rem;
+  }
 }
 
 .container {
@@ -25,5 +38,82 @@ body {
 
   @media screen and (max-width: 768px) {
     min-height: calc((var(--view-height, 1vh) * 100) - 61px - 48px);
+  }
+}
+
+.section + .section {
+  margin-top: 12rem;
+
+  @media screen and (max-width: 428px) {
+    margin-top: 8px;
+  }
+}
+
+.section {
+  .post-list {
+    margin-top: 4rem;
+  }
+
+  .author-list {
+    margin-top: 4rem;
+  }
+
+  .view-more {
+    margin-top: 4rem;
+  }
+}
+
+.inner {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  @media screen and (max-width: 428px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0 0.125em;
+
+  &__inner-text {
+    display: block;
+    width: fit-content;
+    padding: 0 1.5em;
+    background-color: $color-text;
+    font-family: "EB Garamond", serif;
+    color: $color-bg;
+    font-size: clamp(1.5rem, 0.786rem + 3.57vw, 2.5rem);
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    width: 0.25em;
+    align-self: stretch;
+    border-left: 0.25em solid $color-text;
+  }
+
+  @media screen and (max-width: 428px) {
+    &__inner-text {
+      width: 100%;
+      padding: 0.5rem;
+      text-align: center;
+    }
+  }
+}
+
+.view-more {
+  display: block;
+  width: fit-content;
+  border-bottom: 1px solid $color-text;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $color-accent;
+      color: $color-accent;
+    }
   }
 }

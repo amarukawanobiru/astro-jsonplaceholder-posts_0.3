@@ -1,0 +1,167 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import PostList from "../../components/PostList.astro";
+import { Image } from "astro:assets";
+import authorIcon_01 from "../../assets/author-icon_01.png";
+import authorIcon_02 from "../../assets/author-icon_02.png";
+import authorIcon_03 from "../../assets/author-icon_03.png";
+import authorIcon_04 from "../../assets/author-icon_04.png";
+import authorIcon_05 from "../../assets/author-icon_05.png";
+import authorIcon_06 from "../../assets/author-icon_06.png";
+import authorIcon_07 from "../../assets/author-icon_07.png";
+import authorIcon_08 from "../../assets/author-icon_08.png";
+import authorIcon_09 from "../../assets/author-icon_09.png";
+import authorIcon_10 from "../../assets/author-icon_10.png";
+import { fetchApi } from "../../scripts/api";
+import { endpoint } from "../../lib/config";
+import type { Author, Post, PageStatus } from "../../lib/config";
+
+export const getStaticPaths = async () => {
+  const authorsData = await fetchApi(endpoint.authors);
+  const allPosts = await fetchApi(endpoint.posts);
+
+  return authorsData.map((author: Author) => {
+    const authorsPosts = allPosts.filter((post: Post) => post.userId === String(author.id))
+
+    return {
+      params: { id: author.id },
+      props: { author, posts: authorsPosts },
+    }
+  })
+}
+
+const { author, posts } = Astro.props;
+console.log(author)
+
+const authorIcons = [
+  authorIcon_01,
+  authorIcon_02,
+  authorIcon_03,
+  authorIcon_04,
+  authorIcon_05,
+  authorIcon_06,
+  authorIcon_07,
+  authorIcon_08,
+  authorIcon_09,
+  authorIcon_10,
+];
+
+const pageStatus: PageStatus = {
+  title: `Author | ${ author.name }`,
+  description: "I am not good at English, but I tried my best to make it.",
+};
+---
+
+<PageLayout title={ pageStatus.title } description={ pageStatus.description }>
+  <section class="author section ptAnyRem mbAnyRem">
+    <h1 class="section-heading"><span class="section-heading__inner-text">Author</span></h1>
+    <div class="inner">
+      <div class="author-card">
+        <Image class="author-card__image" src={ authorIcons[author.id - 1] } alt="Author icon" />
+        <div class="author-card__body">
+          <h2 class="author-card__username">{ author.username.replace(/[_\.]/g, " ") }</h2>
+          <p class="author-card__name">by: { author.name }</p>
+        </div>
+      </div>
+      <dl class="author-data-list">
+        <div class="author-data-list__row">
+          <dt>Email<span>:</span></dt><dd>{ author.email.split("@").slice(0, 1) }<br class="email-word-break" />@{ author.email.split("@").slice(1) }</dd>
+        </div>
+        <div class="author-data-list__row">
+          <dt>Address<span>:</span></dt><dd>{ `${ author.address.street } - ${ author.address.suite } - ${ author.address.city }` }</dd>
+        </div>
+        <div class="author-data-list__row">
+          <dt>Zipcode<span>:</span></dt><dd>{ author.address.zipcode }</dd>
+        </div>
+        <div class="author-data-list__row">
+          <dt>Phone<span>:</span></dt><dd>{ author.phone }</dd>
+        </div>
+        <div class="author-data-list__row">
+          <dt>Website<span>:</span></dt><dd><a href="#!">{ author.website }</a></dd>
+        </div>
+        <div class="author-data-list__row">
+          <dt>Company<span>:</span></dt><dd>{ author.company.name }</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="authors-post">
+      <h2 class="section-heading"><span class="section-heading__inner-text">{ author.username }'s Posts</span></h2>
+      <div class="inner">
+        <PostList posts={ posts } />
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style lang="scss">
+  @use "../../styles/colors" as *;
+
+  .author-card {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0 1.5rem;
+
+    &__image {
+      max-width: 128px;
+    }
+
+    &__username {
+      font-family: "EB Garamond", sans-serif;
+      font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
+      font-weight: 700;
+    }
+
+    &__name {
+      margin-top: 0.25rem;
+      font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
+      font-style: italic;
+    }
+  }
+
+  .author-data-list {
+    margin-top: 2rem;
+    
+    &__row {
+      display: flex;
+      gap: 0 1.5rem;
+
+      +.author-data-list__row {
+        margin-top: 0.5rem;
+      }
+    }
+
+    dt {
+      width: 5.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    dd {
+      width: calc(100% - 1.5rem - 5.5rem);
+
+      a {
+        border-bottom: 1px solid $color-text;
+
+        @media (hover: hover) {
+          &:hover {
+            border-color: $color-accent;
+            color: $color-accent;
+          }
+        }
+      }
+    }
+  }
+
+  .authors-post {
+    margin-top: 8rem;
+  }
+
+  .email-word-break {
+    display: none;
+
+    @media screen and (max-width: 428px) {
+      display: block;
+    }
+  }
+</style>
