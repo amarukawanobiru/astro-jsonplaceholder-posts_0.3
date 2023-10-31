@@ -99,44 +99,44 @@ const pageStatus: PageStatus = {
   .author-meta {
     width: fit-content;
     margin-top: 4rem;
+  }
 
-    &__link {
-      display: flex;
-      align-items: center;
-      gap: 0 1.5rem;
+  .author-meta__link {
+    display: flex;
+    align-items: center;
+    gap: 0 1.5rem;
 
-      @media (hover: hover) {
-        &:hover {
-          .author-meta__image {
-            opacity: 0.7;
-          }
+    @media (hover: hover) {
+      &:hover {
+        .author-meta__image {
+          opacity: 0.7;
+        }
 
-          .author-meta__username {
-            color: $color-accent;
-          }
+        .author-meta__username {
+          color: $color-accent;
+        }
 
-          .author-meta__name {
-            color: $color-accent;
-          }
+        .author-meta__name {
+          color: $color-accent;
         }
       }
     }
+  }
 
-    &__image {
-      max-width: 128px;
-    }
+  .author-meta__image {
+    max-width: 128px;
+  }
 
-    &__username {
-      font-family: "EB Garamond", sans-serif;
-      font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
-      font-weight: 700;
-    }
+  .author-meta__username {
+    font-family: "EB Garamond", sans-serif;
+    font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
+    font-weight: 700;
+  }
 
-    &__name {
-      margin-top: 0.25rem;
-      font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
-      font-style: italic;
-    }
+  .author-meta__name {
+    margin-top: 0.25rem;
+    font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
+    font-style: italic;
   }
 
   .page-links {

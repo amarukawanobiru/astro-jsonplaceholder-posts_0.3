@@ -58,56 +58,6 @@ const authorIcons = [
   .author-item {
     width: calc((100% - 2rem) / 3);
 
-    &__link {
-      width: fit-content;
-
-      @media (hover: hover) {
-        &:hover {
-          .author-item__image {
-            opacity: 0.7;
-          }
-
-          .author-item__username {
-            color: $color-accent;
-          }
-
-          .author-item__name {
-            color: $color-accent;
-          }
-        }
-      }
-
-      @media screen and (max-width: 428px) {
-        display: flex;
-        align-items: center;
-        gap: 0 1.5rem;
-      }
-    }
-
-    &__image {
-      max-width: 128px;
-    }
-
-    &__body {
-      margin-top: 0.5rem;
-
-      @media screen and (max-width: 428px) {
-        margin-top: 0;
-      }
-    }
-
-    &__username {
-      font-family: "EB Garamond", sans-serif;
-      font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
-      font-weight: 700;
-    }
-
-    &__name {
-      margin-top: 0.25rem;
-      font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
-      font-style: italic;
-    }
-
     @media screen and (max-width: 768px) {
       width: calc((100% - 1rem) / 2);
     }
@@ -115,5 +65,55 @@ const authorIcons = [
     @media screen and (max-width: 428px) {
       width: 100%;
     }
+  }
+
+  .author-item__link {
+    width: fit-content;
+
+    @media (hover: hover) {
+      &:hover {
+        .author-item__image {
+          opacity: 0.7;
+        }
+
+        .author-item__username {
+          color: $color-accent;
+        }
+
+        .author-item__name {
+          color: $color-accent;
+        }
+      }
+    }
+
+    @media screen and (max-width: 428px) {
+      display: flex;
+      align-items: center;
+      gap: 0 1.5rem;
+    }
+  }
+
+  .author-item__image {
+    max-width: 128px;
+  }
+
+  .author-item__body {
+    margin-top: 0.5rem;
+
+    @media screen and (max-width: 428px) {
+      margin-top: 0;
+    }
+  }
+
+  .author-item__username {
+    font-family: "EB Garamond", sans-serif;
+    font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
+    font-weight: 700;
+  }
+
+  .author-item__name {
+    margin-top: 0.25rem;
+    font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
+    font-style: italic;
   }
 </style>

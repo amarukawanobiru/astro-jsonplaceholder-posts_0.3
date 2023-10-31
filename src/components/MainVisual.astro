@@ -8,19 +8,25 @@
 </section>
 
 <style lang="scss">
+  @use "../styles/colors" as *;
+
   .main-visual {
     height: 600px;
-
-    &__inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    &__copy {
-      font-family: "EB Garamond", sans-serif;
-      font-size: clamp(2rem, 0.636rem + 6.82vw, 5rem);
-      letter-spacing: 0.05em;
-    }
+  }
+  
+  .main-visual__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .main-visual__copy {
+    font-family: "EB Garamond", sans-serif;
+    font-size: clamp(2rem, 0.636rem + 6.82vw, 5rem);
+    letter-spacing: 0.05em;
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+</script>

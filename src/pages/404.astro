@@ -23,33 +23,31 @@ const pageStatus: PageStatus = {
 <style lang="scss">
   @use "../styles/colors" as *;
 
-  .page-404 {
-    &__heading {
-      font-family: "EB Garamond", serif;
-      font-size: clamp(2rem, 0.636rem + 6.82vw, 5rem);
-      letter-spacing: .05em;
-    }
+  .page-404__heading {
+    font-family: "EB Garamond", serif;
+    font-size: clamp(2rem, 0.636rem + 6.82vw, 5rem);
+    letter-spacing: .05em;
+  }
 
-    &__body {
-      margin-top: 2rem;
-      font-size: 1.125rem;
-    }
+  .page-404__body {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+  }
 
-    &__text {
-      font-size: clamp(1rem, 0.886rem + 0.57vw, 1.25rem);
-    }
+  .page-404__text {
+    font-size: clamp(1rem, 0.886rem + 0.57vw, 1.25rem);
+  }
 
-    .back-to-home {
-      margin-left: .5rem;
-      margin-right: .5rem;
-      font-style: italic;
-      border-bottom: 1px solid $color-text;
+  .back-to-home {
+    margin-left: .5rem;
+    margin-right: .5rem;
+    font-style: italic;
+    border-bottom: 1px solid $color-text;
 
-      @media (hover: hover) {
-        &:hover {
-          border-color: $color-accent;
-          color: $color-accent;
-        }
+    @media (hover: hover) {
+      &:hover {
+        border-color: $color-accent;
+        color: $color-accent;
       }
     }
   }

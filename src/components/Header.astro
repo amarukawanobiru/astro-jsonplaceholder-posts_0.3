@@ -61,18 +61,18 @@ const navLinks = [
       top: calc(100% - 3px);
       left: 0;
     }
-
-    &__inner {
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-
-      @media screen and (max-width: 768px) {
-        height: 60px;
-        gap: 0 2rem;
-      }
+  }
+  
+  .header__inner {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  
+    @media screen and (max-width: 768px) {
+      height: 60px;
+      gap: 0 2rem;
     }
   }
 
@@ -113,15 +113,6 @@ const navLinks = [
     align-items: center;
     justify-content: center;
     gap: 4px 0;
-    
-    &__bar {
-      display: block;
-      width: 100%;
-      border-bottom: 2px solid $color-text;
-      transition-property: transform, opacity;
-      transition-duration: 0.2s;
-      transition-timing-function: ease-in-out;
-    }
 
     &.js-active {
       .hamburger__bar:nth-of-type(1) {
@@ -143,6 +134,15 @@ const navLinks = [
     }
   }
 
+  .hamburger__bar {
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid $color-text;
+    transition-property: transform, opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+
   // ***** ***** drawer-menu
   .drawer-menu {
     width: 100%;
@@ -157,37 +157,35 @@ const navLinks = [
     transition-duration: 0.2s;
     transition-timing-function: ease-in-out;
 
-    &__inner {
-      padding: 1.5rem 1.5rem 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      overflow: hidden;
-
-      a + a {
-        margin-top: 1.5rem;
-      }
-
-      a {
-        color: $color-bg;
-        font-size: 1.5rem;
-        transition: opacity 0.1s ease-in-out;
-        opacity: 0;
-      }
-    }
-
     &.js-active {
       visibility: visible;
       height: var(--drawerMenu-height);
       opacity: 1;
 
-      .drawer-menu__inner {
-        a {
-          transition-delay: 0.2s;
-          transform: translateX(0);
-          opacity: 1;
-        }
+      .drawer-menu__inner a {
+        transition-delay: 0.2s;
+        transform: translateX(0);
+        opacity: 1;
       }
+    }
+  }
+
+  .drawer-menu__inner {
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+
+    a + a {
+      margin-top: 1.5rem;
+    }
+
+    a {
+      color: $color-bg;
+      font-size: 1.5rem;
+      transition: opacity 0.1s ease-in-out;
+      opacity: 0;
     }
   }
 </style>

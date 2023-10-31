@@ -30,7 +30,7 @@ const authorsData = await fetchApi(endpoint.authors);
 const author: Author = authorsData.find((author: Author) => String(author.id) === id);
 
 const allPosts = await fetchApi(endpoint.posts);
-const posts = allPosts.filter((post: Post) => String(post.userId) === id);
+const posts: Post[] = allPosts.filter((post: Post) => String(post.userId) === id);
 
 const authorIcons = [
   authorIcon_01,
@@ -100,35 +100,26 @@ const pageStatus: PageStatus = {
     display: flex;
     align-items: center;
     gap: 0 1.5rem;
+  }
 
-    &__image {
-      max-width: 128px;
-    }
+  .author-card__image {
+    max-width: 128px;
+  }
 
-    &__username {
-      font-family: "EB Garamond", sans-serif;
-      font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
-      font-weight: 700;
-    }
+  .author-card__username {
+    font-family: "EB Garamond", sans-serif;
+    font-size: clamp(1.25rem, 1.071rem + 0.89vw, 1.5rem);
+    font-weight: 700;
+  }
 
-    &__name {
-      margin-top: 0.25rem;
-      font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
-      font-style: italic;
-    }
+  .author-card__name {
+    margin-top: 0.25rem;
+    font-size: clamp(0.75rem, 0.661rem + 0.45vw, 0.875rem);
+    font-style: italic;
   }
 
   .author-data-list {
     margin-top: 2rem;
-    
-    &__row {
-      display: flex;
-      gap: 0 1.5rem;
-
-      +.author-data-list__row {
-        margin-top: 0.5rem;
-      }
-    }
 
     dt {
       width: 5.5rem;
@@ -149,6 +140,15 @@ const pageStatus: PageStatus = {
           }
         }
       }
+    }
+  }
+
+  .author-data-list__row {
+    display: flex;
+    gap: 0 1.5rem;
+
+    +.author-data-list__row {
+      margin-top: 0.5rem;
     }
   }
 
