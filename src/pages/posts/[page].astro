@@ -13,7 +13,16 @@ export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
 
 const { page } = Astro.props;
 
-const paginationNumbers = Array.from({ length: page.lastPage }, (_, i) => String(i + 1));
+const paginationNumbers = Array.from({ length: page.lastPage }, (_, i) => String(i + 1)).slice(1, -1);
+
+let filteredPaginationNumbers: Array<string> = [];
+if (page.currentPage === 1 || page.currentPage === 2) {
+  filteredPaginationNumbers = paginationNumbers.slice(0, 5);
+} else if (page.currentPage >= 5) {
+  filteredPaginationNumbers = paginationNumbers.slice(-5);
+} else {
+  filteredPaginationNumbers = paginationNumbers.slice(page.currentPage - 2, page.currentPage + 3);
+}
 
 const pageStatus = {
   title: `Posts | page: ${ page.currentPage }`,
@@ -28,13 +37,25 @@ const pageStatus = {
       <PostList posts={ page.data } />
       <ul class="pagination">
         {
-          paginationNumbers.map((pageNumber) => {
+          page.currentPage === 1 ?
+          <li><span class="current-page">{ `<< 1 ` }</span></li> :
+          <li><a class="paginate-link" href={ `/posts/1` }>{ `<< 1 ` }</a></li>
+        }
+        <li>…</li>
+        {
+          filteredPaginationNumbers.map((pageNumber) => {
             return (
               pageNumber === `${ page.currentPage }` ?
               <li><span class="current-page">{ pageNumber }</span></li> :
               <li><a class="paginate-link" href={ `/posts/${ pageNumber }` }>{ pageNumber }</a></li>
             )
           })
+        }
+        <li>…</li>
+        {
+          page.currentPage === page.lastPage ?
+          <li><span class="current-page">{ `${ page.lastPage } >>` }</span></li> :
+          <li><a class="paginate-link" href={ `/posts/${ page.lastPage }` }>{ `${ page.lastPage } >>` }</a></li>
         }
       </ul>
     </div>

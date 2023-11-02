@@ -3,7 +3,16 @@
 
 <section class="main-visual section">
   <div class="main-visual__inner">
-    <h1 class="main-visual__copy">Learning site<br />for astro<br />using JSONPlaceholder</h1>
+    <h1 class="main-visual__copy">
+      {
+        Array.from({length: 4}, (_) => "").map((_) => (
+          <div class="js-typing">
+            <div class="js-typing__text"></div>
+            <span class="caret"></span>
+          </div>
+        ))
+      }
+    </h1>
   </div>
 </section>
 
@@ -24,9 +33,75 @@
     font-family: "EB Garamond", sans-serif;
     font-size: clamp(2rem, 0.636rem + 6.82vw, 5rem);
     letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .js-typing {
+    display: flex;
+  }
+
+  .caret {
+    height: clamp(2rem, 0.636rem + 6.82vw, 5rem);
+    border-left: 4px solid $color-text;
+    display: none;
+
+    animation: caretBlink 1s infinite step-start;
+  }
+
+  @keyframes caretBlink {
+    0%, 50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
   }
 </style>
 
 <script>
   import gsap from "gsap";
+
+  const typingStrings1 = "Learning site".split("");
+  const typingStrings2 = "for astro".split("");
+  const typingStrings3 = "using".split("");
+  const typingStrings4 = "JSONPlaceholder".split("");
+  const typingStringsArr = [typingStrings1, typingStrings2, typingStrings3, typingStrings4];
+
+  const $carets: NodeListOf<HTMLElement> | null = document.querySelectorAll(".caret");
+
+  const gsapTl = gsap.timeline({delay: 0.5});
+  gsapTl.pause();
+
+  const $jsTypgingTexts: NodeListOf<HTMLElement> | null = document.querySelectorAll(".js-typing__text");
+
+  for (let [i, len] = [0, typingStringsArr.length]; i < len; i++) {
+    gsapTl.add(() => {
+      $carets[i].style.display = "block";
+    }, "+=0.5");
+  
+    const stringLength = typingStringsArr[i].length;
+    for (let j = 0; j < stringLength; j++) {
+      if (j === 0) {
+        gsapTl.add(() => {
+          $jsTypgingTexts[i].insertAdjacentHTML("beforeend", `${typingStringsArr[i][j]}`);
+        }, "+=0.1");
+      } else {
+        gsapTl.add(() => {
+          $jsTypgingTexts[i].insertAdjacentHTML("beforeend", `${typingStringsArr[i][j]}`);
+        }, "+=0.1");
+      }
+    };
+  
+    if (i !== len - 1) {
+      gsapTl.add(() => {
+        $carets[i].style.display = "none";
+      }, "+=0.5");
+    }
+  }
+
+  window.addEventListener("load", () => {
+    gsapTl.play();
+  })
 </script>
